@@ -3,9 +3,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script>
 	$(function(){
-		$(".bbs-row").click(function(){
-			let bbs_seq = $(this).attr("data-seq")
-			location.href="${rootPath}/bbs/view?bbs_seq=" + bbs_seq
+		$(".ems_row").click(function(){
+			let ems_seq = $(this).attr("data-seq")
+			location.href="${rootPath}/ems/view?ems_seq=" + ems_seq
 		})
 	})
 </script>
@@ -19,14 +19,14 @@
 		<th>작성시각</th>
 	</tr>
 	<c:choose>
-		<c:when test="${empty LIST}">
+		<c:when test="${empty EMSLIST}">
 			<tr>
 				<td colspan="6">데이터가 없습니다</td>
 			</tr>
 		</c:when>
 		<c:otherwise>
-			<c:forEach items="${LIST}" var="eVO" varStatus="s" >
-				<tr class="bbs-row" data-seq="${eVO.ems_seq}">
+			<c:forEach items="${EMSLIST}" var="eVO" varStatus="s" >
+				<tr class="ems_row" data-seq="${eVO.ems_seq}">
 					<td>${eVO.ems_seq}</td>
 					<td>${eVO.ems_from_email}</td>
 					<td>${eVO.ems_from_name}</td>

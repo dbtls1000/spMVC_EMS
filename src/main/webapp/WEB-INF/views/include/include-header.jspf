@@ -28,7 +28,7 @@ a.logo img:hover{
 	</header>
 	<nav>		
 		<ul class="main-menu">
-			<li><a class="a-menu" href="javascript:void(0)" data-menu="list">EMS</a></li>
+			<li><a class="a-menu" href="javascript:void(0)" data-menu="ems/list">EMS</a></li>
 			<li><a class="a-menu" href="javascript:void(0)" data-menu="bbs/free">자유게시판</a></li>
 			<li><a class="a-menu" href="javascript:void(0)" data-menu="bbs/notice">공지사항</a></li>
 			<li><a class="a-menu" href="javascript:void(0)" data-menu="member/login">로그인</a></li>

@@ -128,9 +128,9 @@ $(function(){
 		</div>
 		
 		<div class="in-box">
-			<label for="ems_to_name">작성자</label>
-			<form:input type="text" id="ems_to_name" path="ems_to_name" /><br/>
-			<form:errors path="ems_to_name" class="in-box-error" />
+			<label for="ems_from_name">작성자</label>
+			<form:input type="text" id="ems_from_name" path="ems_from_name" /><br/>
+			<form:errors path="ems_from_name" class="in-box-error" />
 		</div>
 		
 		<div class="in-box">

@@ -22,21 +22,27 @@
 <link rel="stylesheet" type="text/css" 
 	href="${rootPath}/resources/css/album.css?ver=20190726">						
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script>
+<!-- <script>
 	$(function () {
 		$.get("${rootPath}/menu",function(result){
 			$("section.menu_box").html(result)
 		})
 	})
-</script>
+</script> -->
 </head>
 
 <body>
 <%@ include file="/WEB-INF/views/include/include-header.jspf" %>
-	<section>
+	<section id="menu_box">
 		<c:choose>
 			<c:when test="${BODY == 'WRITE'}">
 				<%@ include file="/WEB-INF/views/body/ems/write.jspf" %>
+			</c:when>
+			<c:when test="${BODY == 'LIST'}">
+				<%@ include file="/WEB-INF/views/body/ems/list.jspf" %>
+			</c:when>
+			<c:when test="${BODY == 'VIEW'}">
+				<%@ include file="/WEB-INF/views/body/ems/view.jspf" %>
 			</c:when>
 			<c:otherwise>
 				<%@ include file="/WEB-INF/views/body/ems/list.jspf" %>

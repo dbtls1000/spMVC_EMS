@@ -1,5 +1,9 @@
 package com.biz.ems.controller;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,9 @@ import com.biz.ems.model.EmailVO;
 import com.biz.ems.service.FileService;
 import com.biz.ems.service.SendMailService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping(value="/ems")
 public class EmailController {
@@ -28,17 +35,33 @@ public class EmailController {
 		return new EmailVO();
 	}
 	
-	@RequestMapping(value="/list",method=RequestMethod.POST)
+	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(Model model) {
+		List<EmailVO> emsList = xMailService.selectAll();
 		
+		model.addAttribute("EMSLIST",emsList);
+		model.addAttribute("BODY","LIST");
+		return "home";
+	}
+	
+	@RequestMapping(value="/view",method=RequestMethod.GET)
+	public String view(@RequestParam("ems_seq") long ems_seq,Model model) {
+		EmailVO emailVO = xMailService.findBySeq(ems_seq);
+		
+		model.addAttribute("EMSVIEW",emailVO);
+		model.addAttribute("BODY","VIEW");
 		return "home";
 	}
 	
 	@RequestMapping(value="/write",method=RequestMethod.GET)
 	public String write(@ModelAttribute("emailVO") EmailVO emailVO, Model model) {
 		
-		emailVO.setEms_send_date("2019-08-08");
-		emailVO.setEms_send_time("15:20:00");
+		LocalDateTime ldt = LocalDateTime.now();
+		String curDate = ldt.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")).toString();
+		String curTime = ldt.format(DateTimeFormatter.ofPattern("HH:mm:ss")).toString();
+		
+		emailVO.setEms_send_date(curDate);
+		emailVO.setEms_send_time(curTime);
 		emailVO.setEms_from_email("dbsqhtjs@naver.com");
 		emailVO.setEms_from_name("4Chinese can't win");
 		
@@ -57,13 +80,28 @@ public class EmailController {
 		
 		String file_name1 = fService.fileUp(file1);
 		emailVO.setEms_file1(file_name1);
-		String file_name2 = fService.fileUp(file1);
+		String file_name2 = fService.fileUp(file2);
 		emailVO.setEms_file2(file_name2);
+		
+		xMailService.insert(emailVO);
 		
 		xMailService.sendMail(emailVO);
 		
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value="/update",method=RequestMethod.GET)
+	public String update(@RequestParam("ems_seq") long ems_seq, Model model) {
+		EmailVO emailVO = xMailService.findBySeq(ems_seq);
+		
+//		log.info("수정파일1 : "+ emailVO.getEms_file1());
+//		log.info("수정파일2 : "+ emailVO.getEms_file2());
+		
+		model.addAttribute("emailVO",emailVO);
+		model.addAttribute("BODY","WRITE");
 		return "home";
 	}
+	
 	
 	
 }
