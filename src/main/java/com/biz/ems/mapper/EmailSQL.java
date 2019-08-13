@@ -21,4 +21,22 @@ public class EmailSQL {
 		
 		return sql.toString();
 	}
+	
+	public String ems_update_sql() {
+		SQL sql = new SQL()
+				.UPDATE("tbl_ems")
+				.SET("ems_to_email = #{ems_to_email}")
+				.SET("ems_from_email = #{ems_from_email}")
+				.SET("ems_to_name = #{ems_to_name}")
+				.SET("ems_from_name = #{ems_from_name}")
+				.SET("ems_send_date = #{ems_send_date}")
+				.SET("ems_send_time = #{ems_send_time}")
+				.SET("ems_subject = #{ems_subject}")
+				.SET("ems_content = #{ems_content}")
+				.SET("ems_file1 = #{ems_file1}")
+				.SET("ems_file2 = #{ems_file2}")
+				.WHERE("ems_seq = #{ems_seq}");
+		
+		return sql.toString();
+	}
 }

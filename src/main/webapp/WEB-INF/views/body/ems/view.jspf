@@ -7,23 +7,9 @@
 <% pageContext.setAttribute("u_newLine","\r\n"); %>    
 
 <style>
-	div.thumb-container{
-		display: flex;
-		flex-flow: wrap;
-		width: 100%;
-	}
-	div.thumb-box{
-		flex:0 1 150px; 
-		width: 150px;
-		height:150px;
-		overflow: hidden;
-	}
-	div.thumb-box img{
-		width: 100%;
-	}
 </style>
-<table class="bz-view-table">
-	<caption style="font-size:50px">E M S</caption>
+
+<table class="emsview">
 	<tr>
 		<th>작성시각</th>
 		<td>${EMSVIEW.ems_send_date}&nbsp;&nbsp;${EMSVIEW.ems_send_time}</td>
@@ -38,7 +24,7 @@
 		<th>내용</th>
 		<td colspan="3">${fnt:replace(fnt:replace(EMSVIEW.ems_content,w_newLine,"<br/>"),u_newLine,"<br/>")}</td>
 	</tr>
-	<tr>
+	<tr class="img">
 		<c:if test="${not empty EMSVIEW.ems_file1}">
 			<th>파일1</th>
 			<td>
@@ -52,10 +38,8 @@
 		<c:if test="${not empty EMSVIEW.ems_file2}">
 			<th>파일2</th>
 			<td>
-				<div class="thumb-container">
-						<div class="thumb-box">
-							<img src="${rootPath}/images/${EMSVIEW.ems_file2}" >
-						</div>
+				<div>
+					<img src="${rootPath}/images/${EMSVIEW.ems_file2}" >
 				</div>
 			</td>
 		</c:if>
@@ -65,7 +49,7 @@
 $(function(){
 	$("#btn-delete").click(function(){
 		if(confirm("정말 삭제할까요?"))
-		location.replace("${rootPath}/bbs/delete/${BBS.bbs_seq}")
+		location.replace("${rootPath}/ems/delete/${EMSVIEW.ems_seq}")
 	})
 	$("#btn-reply").click(function () {
 		location.href = "${rootPath}/bbs/reply/${BBS.bbs_seq}"

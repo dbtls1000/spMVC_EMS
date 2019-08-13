@@ -96,11 +96,46 @@ public class SendMailService {
 		int ret = eDao.insert(emailVO);
 		return ret;
 	}
-
+	
+	public int update(EmailVO emailVO) {
+		int ret = eDao.update(emailVO);
+		return ret;
+	}
+	
 	public EmailVO findBySeq(long ems_seq) {
 		// TODO Auto-generated method stub
 		EmailVO emailVO = eDao.findBySeq(ems_seq);
 		return emailVO;
+	}
+
+	public int delete(long ems_seq) {
+		// TODO Auto-generated method stub
+		int ret = eDao.delete(ems_seq);
+		return ret;
+	}
+
+	public List<EmailVO> findByContent(String search) {
+		// TODO Auto-generated method stub
+		List<EmailVO> emailList = eDao.findByContent(search);
+		return emailList;
+	}
+
+	public List<EmailVO> findBySubject(String search) {
+		// TODO Auto-generated method stub
+		List<EmailVO> emailList = eDao.findBySubject(search);
+		return emailList;
+	}
+
+	public List<EmailVO> findByToName(String search) {
+		// TODO Auto-generated method stub
+		List<EmailVO> emailList = eDao.findByToName(search);
+		return emailList;
+	}
+
+	public List<EmailVO> findByToEmail(String search) {
+		// TODO Auto-generated method stub
+		List<EmailVO> emailList = eDao.findByToEmail(search);
+		return emailList;
 	}
 
 

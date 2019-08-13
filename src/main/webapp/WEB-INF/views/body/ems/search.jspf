@@ -1,0 +1,47 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<script>
+	$(function(){
+		$(".ems_row").click(function(){
+			let ems_seq = $(this).attr("data-seq")
+			location.href="${rootPath}/ems/view?ems_seq=" + ems_seq
+		})
+	})
+</script>
+<table class="list">
+	<tr>
+		<th>NO</th>
+		<th>받는Email</th>
+		<th>보내는사람</th>
+		<th>제목</th>
+		<th>작성일자</th>
+		<th>작성시각</th>
+	</tr>
+	<c:choose>
+		<c:when test="${empty EMSSEARCH}">
+			<tr>
+				<td colspan="6">데이터가 없습니다</td>
+			</tr>
+		</c:when>
+		<c:otherwise>
+			<c:forEach items="${EMSSEARCH}" var="eVO" varStatus="s" >
+				<tr class="ems_row" data-seq="${eVO.ems_seq}">
+					<td>${eVO.ems_seq}</td>
+					<td>${eVO.ems_to_email}</td>
+					<td>${eVO.ems_from_name}</td>
+					<td>${eVO.ems_subject}</td>
+					<td>${eVO.ems_send_date}</td>
+					<td>${eVO.ems_send_time}</td>
+					<td></td>
+				</tr>
+			</c:forEach>
+		</c:otherwise>
+	</c:choose>
+</table>
+<div class="btn-box right" style="padding-right: 35px;">
+		<!-- 인라인 스크립트 지정방식 -->
+	<button id="btn-input" 
+			onclick="location.href='${rootPath}/ems/write'"
+			class="bz-btn input">글쓰기</button>
+</div>

@@ -13,7 +13,7 @@
 	<tr>
 		<th>NO</th>
 		<th>받는Email</th>
-		<th>받는사람</th>
+		<th>보내는사람</th>
 		<th>제목</th>
 		<th>작성일자</th>
 		<th>작성시각</th>
@@ -28,7 +28,7 @@
 			<c:forEach items="${EMSLIST}" var="eVO" varStatus="s" >
 				<tr class="ems_row" data-seq="${eVO.ems_seq}">
 					<td>${eVO.ems_seq}</td>
-					<td>${eVO.ems_from_email}</td>
+					<td>${eVO.ems_to_email}</td>
 					<td>${eVO.ems_from_name}</td>
 					<td>${eVO.ems_subject}</td>
 					<td>${eVO.ems_send_date}</td>
@@ -39,6 +39,25 @@
 		</c:otherwise>
 	</c:choose>
 </table>
+<div class="container">
+	<div class="row">
+		<div class="col">
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><a class="page-link" href="#">이전</a></li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<li class="page-item"><a class="page-link" href="#">5</a></li>
+				<li class="page-item"><a class="page-link" href="#">다음</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
 <div class="btn-box right" style="padding-right: 35px;">
 		<!-- 인라인 스크립트 지정방식 -->
 	<button id="btn-input" 
