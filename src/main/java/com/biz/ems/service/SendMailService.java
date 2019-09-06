@@ -2,6 +2,7 @@ package com.biz.ems.service;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -84,9 +85,9 @@ public class SendMailService {
 		
 	}
 	
-	public List<EmailVO> selectAll() {
+	public List<EmailVO> selectAll(HashMap<String,Object> option) {
 		// TODO Auto-generated method stub
-		List<EmailVO> emsList = eDao.selectAll();
+		List<EmailVO> emsList = eDao.selectAll(option);
 		return emsList;
 	}
 	
@@ -136,6 +137,11 @@ public class SendMailService {
 		// TODO Auto-generated method stub
 		List<EmailVO> emailList = eDao.findByToEmail(search);
 		return emailList;
+	}
+
+	public int countArticle() {
+		// TODO Auto-generated method stub
+		return eDao.countArticle();
 	}
 
 

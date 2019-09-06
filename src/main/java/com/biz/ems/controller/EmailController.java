@@ -3,6 +3,7 @@ package com.biz.ems.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.biz.ems.model.EmailVO;
+import com.biz.ems.model.Pager;
 import com.biz.ems.service.FileService;
 import com.biz.ems.service.SendMailService;
 
@@ -38,9 +40,23 @@ public class EmailController {
 	}
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
-	public String list(Model model) {
-		List<EmailVO> emsList = xMailService.selectAll();
+	public String list(@RequestParam(defaultValue = "1") int curPage,
+						Model model) {
 		
+		int count = xMailService.countArticle();
+		Pager pager = new Pager(count,curPage);
+		int start = pager.getPageBegin();
+		int end = pager.getPageEnd();
+		
+		HashMap<String,Object> option = new HashMap<String,Object>();
+		option.put("start", start);
+		option.put("end", end);
+		
+		List<EmailVO> emsList = xMailService.selectAll(option);
+		
+		
+		
+		model.addAttribute("pager",pager);
 		model.addAttribute("EMSLIST",emsList);
 		model.addAttribute("BODY","LIST");
 		return "home";
@@ -144,7 +160,7 @@ public class EmailController {
 		
 		log.info("카테고리 " + category);
 		log.info("검색어 " + search);
-		if(category.equalsIgnoreCase("ems_from_email")) {
+		if(category.equalsIgnoreCase("ems_to_email")) {
 			emailList = xMailService.findByToEmail(search);
 		}else if(category.equalsIgnoreCase("ems_from_name")) {
 			emailList = xMailService.findByToName(search);

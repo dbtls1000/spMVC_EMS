@@ -39,4 +39,5 @@ public class EmailSQL {
 		
 		return sql.toString();
 	}
+	
 }

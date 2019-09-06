@@ -1,5 +1,6 @@
 package com.biz.ems.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -11,14 +12,21 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import com.biz.ems.model.EmailVO;
 
 public interface EmailDao {
-	@Select(" SELECT * FROM tbl_ems ")
-	public List<EmailVO> selectAll();
+	@Select("SELECT * FROM ( SELECT rownum AS rnum, A.* FROM ( "
+			+" SELECT * FROM tbl_ems "
+			+ " ORDER BY ems_send_date DESC, ems_send_time DESC ) A ) "
+			+ " WHERE rnum BETWEEN #{start} AND #{end} ")
+	public List<EmailVO> selectAll(HashMap<String,Object> option);
+	
+	@Select(" SELECT COUNT(*) FROM tbl_ems ")
+	public int countArticle();
 	
 	@Select(" SELECT * FROM tbl_ems WHERE ems_seq = #{ems_seq} ")
 	public EmailVO findBySeq(long ems_seq);
 	
-	@Select(" SELECT * FROM tbl_ems WHERE ems_from_email LIKE '%' || #{ems_from_email} || '%' ")
-	public List<EmailVO> findByToEmail(String ems_from_email);
+	@Select(" SELECT * FROM tbl_ems WHERE ems_to_email LIKE '%' || #{ems_to_email} || '%' ")
+	public List<EmailVO> findByToEmail(String search);
+	
 	public List<EmailVO> findByFromEmail(String ems_to_email);
 	
 	@Select(" SELECT * FROM tbl_ems WHERE ems_from_name LIKE '%' || #{ems_from_name} || '%' ")
@@ -46,5 +54,4 @@ public interface EmailDao {
 	@Delete(" DELETE FROM tbl_ems WHERE ems_seq = #{ems_seq} ")
 	public int delete(long ems_seq);
 
-	
 }
