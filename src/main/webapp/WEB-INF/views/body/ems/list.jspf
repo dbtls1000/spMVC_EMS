@@ -44,15 +44,15 @@
 		<div class="col">
 			<ul class="pagination justify-content-center">
 				<c:if test="${pager.curBlock > 1}">
-					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=1">처음으로</a></li>
-					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.blockBegin-10}">이전</a></li>
+					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=1&search_option=${option}&keyword=${keyword}">처음으로</a></li>
+					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.blockBegin-10}&search_option=${option}&keyword=${keyword}">이전</a></li>
 				</c:if>
 				<c:forEach begin="${pager.blockBegin}" end="${pager.blockEnd}" var="idx">
-					<li class="page-item" <c:out value="${pager.curPage == idx ? 'class=active':''}"/> ><a class="page-link" href="${rootPath}/ems/list?curPage=${idx}">${idx}</a></li>
+					<li class="page-item" <c:out value="${pager.curPage == idx ? 'class=active':''}"/> ><a class="page-link" href="${rootPath}/ems/list?curPage=${idx}&search_option=${option}&keyword=${keyword}">${idx}</a></li>
 				</c:forEach>
 				<c:if test="${pager.curBlock < pager.totalBlock}">
-					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.blockEnd+1}">다음</a></li>
-					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.totalPage}">끝으로</a></li>
+					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.blockEnd+1}&search_option=${option}&keyword=${keyword}">다음</a></li>
+					<li class="page-item"><a class="page-link" href="${rootPath}/ems/list?curPage=${pager.totalPage}&search_option=${option}&keyword=${keyword}">끝으로</a></li>
 				</c:if>
 				
 			</ul>

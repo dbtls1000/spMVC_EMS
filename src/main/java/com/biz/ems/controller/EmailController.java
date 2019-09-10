@@ -2,7 +2,6 @@ package com.biz.ems.controller;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -41,9 +40,13 @@ public class EmailController {
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String list(@RequestParam(defaultValue = "1") int curPage,
+						@RequestParam(defaultValue = "toEmail") String search_option,
+						@RequestParam(defaultValue = "") String keyword,
 						Model model) {
-		
-		int count = xMailService.countArticle();
+		HashMap<String,String> test = new HashMap<String,String>();
+		test.put("search_option", search_option);
+		test.put("keyword", keyword);
+		int count = xMailService.countArticle(test);
 		Pager pager = new Pager(count,curPage);
 		int start = pager.getPageBegin();
 		int end = pager.getPageEnd();
@@ -51,11 +54,14 @@ public class EmailController {
 		HashMap<String,Object> option = new HashMap<String,Object>();
 		option.put("start", start);
 		option.put("end", end);
+		option.put("search_option", search_option);
+		option.put("keyword", keyword);
 		
 		List<EmailVO> emsList = xMailService.selectAll(option);
 		
 		
-		
+		model.addAttribute("option",search_option);
+		model.addAttribute("keyword",keyword);
 		model.addAttribute("pager",pager);
 		model.addAttribute("EMSLIST",emsList);
 		model.addAttribute("BODY","LIST");
@@ -152,30 +158,4 @@ public class EmailController {
 		return "redirect:/ems/list";
 	}
 	
-	@RequestMapping(value="/search",method=RequestMethod.POST)
-	public String search(@RequestParam(value="category",required = false) String category,
-							@RequestParam(value="search",required = false) String search,
-							Model model) {
-		List<EmailVO> emailList = new ArrayList<EmailVO>();
-		
-		log.info("카테고리 " + category);
-		log.info("검색어 " + search);
-		if(category.equalsIgnoreCase("ems_to_email")) {
-			emailList = xMailService.findByToEmail(search);
-		}else if(category.equalsIgnoreCase("ems_from_name")) {
-			emailList = xMailService.findByToName(search);
-		}else if(category.equalsIgnoreCase("ems_subject")) {
-			emailList = xMailService.findBySubject(search);
-		}else if(category.equalsIgnoreCase("ems_content")) {
-			emailList = xMailService.findByContent(search);
-		}
-		log.info("이메일리스트"+emailList);
-		
-		
-		model.addAttribute("EMSSEARCH",emailList);
-		model.addAttribute("BODY","SEARCH");
-		
-		
-		return "home";
-	}
 }

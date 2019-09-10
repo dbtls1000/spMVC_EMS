@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import com.biz.ems.mapper.EmailDao;
 import com.biz.ems.model.EmailVO;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class SendMailService {
 	
@@ -87,6 +90,7 @@ public class SendMailService {
 	
 	public List<EmailVO> selectAll(HashMap<String,Object> option) {
 		// TODO Auto-generated method stub
+		option.put("keyword", "%"+option.get("keyword")+"%");
 		List<EmailVO> emsList = eDao.selectAll(option);
 		return emsList;
 	}
@@ -115,33 +119,12 @@ public class SendMailService {
 		return ret;
 	}
 
-	public List<EmailVO> findByContent(String search) {
+	public int countArticle(HashMap<String,String> test) {
 		// TODO Auto-generated method stub
-		List<EmailVO> emailList = eDao.findByContent(search);
-		return emailList;
-	}
-
-	public List<EmailVO> findBySubject(String search) {
-		// TODO Auto-generated method stub
-		List<EmailVO> emailList = eDao.findBySubject(search);
-		return emailList;
-	}
-
-	public List<EmailVO> findByToName(String search) {
-		// TODO Auto-generated method stub
-		List<EmailVO> emailList = eDao.findByToName(search);
-		return emailList;
-	}
-
-	public List<EmailVO> findByToEmail(String search) {
-		// TODO Auto-generated method stub
-		List<EmailVO> emailList = eDao.findByToEmail(search);
-		return emailList;
-	}
-
-	public int countArticle() {
-		// TODO Auto-generated method stub
-		return eDao.countArticle();
+		test.put("keyword", "%"+test.get("keyword")+"%");
+		int a = eDao.countArticle(test);
+		log.info("==========================="+a);
+		return eDao.countArticle(test);
 	}
 
 
